@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🌻 Flor Amarilla</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #111 0%, #000 65%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* =========================
+           ESCENA
+        ========================= */
+
+        .escena {
+            position: relative;
+            width: 400px;
+            height: 650px;
+        }
+
+
+        /* =========================
+           LUZ DETRÁS DE LA FLOR
+        ========================= */
+
+        .luz {
+            position: absolute;
+
+            width: 320px;
+            height: 320px;
+
+            left: 40px;
+            top: 80px;
+
+            background: rgba(255, 205, 0, 0.12);
+
+            border-radius: 50%;
+
+            filter: blur(50px);
+
+            animation: luz 3s infinite alternate;
+        }
+
+
+        /* =========================
+           FLOR
+        ========================= */
+
+        .flor {
+            position: absolute;
+
+            width: 350px;
+            height: 350px;
+
+            left: 25px;
+            top: 50px;
+
+            animation: flotar 4s ease-in-out infinite;
+        }
+
+
+        /* =========================
+           PÉTALOS
+        ========================= */
+
+        .petalo {
+            position: absolute;
+
+            width: 75px;
+            height: 170px;
+
+            left: 137px;
+            top: 0;
+
+            border-radius: 50% 50% 45% 45%;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    #fff86b 0%,
+                    #ffe600 45%,
+                    #ffbd00 100%
+                );
+
+            transform-origin: 38px 170px;
+
+            box-shadow:
+                0 0 12px rgba(255, 215, 0, 0.35),
+                inset 0 -10px 15px rgba(255, 160, 0, 0.15);
+
+            opacity: 0;
+
+            animation:
+                aparecer 0.8s forwards,
+                respirar 3s ease-in-out infinite;
+        }
+
+
+        /* 16 pétalos */
+
+        .p1  { transform: rotate(0deg);    animation-delay: .1s; }
+        .p2  { transform: rotate(22.5deg); animation-delay: .15s; }
+        .p3  { transform: rotate(45deg);   animation-delay: .2s; }
+        .p4  { transform: rotate(67.5deg); animation-delay: .25s; }
+        .p5  { transform: rotate(90deg);   animation-delay: .3s; }
+        .p6  { transform: rotate(112.5deg);animation-delay: .35s; }
+        .p7  { transform: rotate(135deg);  animation-delay: .4s; }
+        .p8  { transform: rotate(157.5deg);animation-delay: .45s; }
+        .p9  { transform: rotate(180deg);  animation-delay: .5s; }
+        .p10 { transform: rotate(202.5deg);animation-delay: .55s; }
+        .p11 { transform: rotate(225deg);  animation-delay: .6s; }
+        .p12 { transform: rotate(247.5deg);animation-delay: .65s; }
+        .p13 { transform: rotate(270deg);  animation-delay: .7s; }
+        .p14 { transform: rotate(292.5deg);animation-delay: .75s; }
+        .p15 { transform: rotate(315deg);  animation-delay: .8s; }
+        .p16 { transform: rotate(337.5deg);animation-delay: .85s; }
+
+
+        /* =========================
+           CENTRO
+        ========================= */
+
+        .centro {
+            position: absolute;
+
+            width: 105px;
+            height: 105px;
+
+            left: 122px;
+            top: 122px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #6b3900 0%,
+                    #3d1d00 45%,
+                    #170900 100%
+                );
+
+            z-index: 20;
+
+            box-shadow:
+                0 0 20px rgba(255, 180, 0, .35),
+                inset 0 0 15px #000;
+
+            animation: centro 3s ease-in-out infinite alternate;
+        }
+
+
+        /* pequeños puntos del centro */
+
+        .centro::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            border-radius: 50%;
+
+            background-image:
+                radial-gradient(
+                    circle,
+                    #a86600 2px,
+                    transparent 3px
+                );
+
+            background-size: 14px 14px;
+
+            opacity: .8;
+        }
+
+
+        /* =========================
+           TALLO
+        ========================= */
+
+        .tallo {
+
+            position: absolute;
+
+            width: 22px;
+            height: 290px;
+
+            left: 164px;
+            top: 310px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    to right,
+                    #064d13,
+                    #25a735,
+                    #08701b,
+                    #064d13
+                );
+
+            z-index: -2;
+
+            box-shadow:
+                3px 0 8px rgba(0, 0, 0, .5);
+        }
+
+
+        /* =========================
+           HOJAS
+        ========================= */
+
+        .hoja {
+
+            position: absolute;
+
+            width: 130px;
+            height: 55px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #42c94c,
+                    #08751c,
+                    #03440d
+                );
+
+            border-radius: 100% 0 100% 0;
+
+            z-index: -1;
+
+            box-shadow:
+                0 5px 10px rgba(0,0,0,.4);
+
+        }
+
+
+        .hoja1 {
+
+            left: 40px;
+            top: 380px;
+
+            transform:
+                rotate(-25deg);
+
+        }
+
+
+        .hoja2 {
+
+            left: 175px;
+            top: 450px;
+
+            transform:
+                rotate(205deg);
+
+        }
+
+
+        /* =========================
+           TEXTO
+        ========================= */
+
+        .mensaje {
+
+            position: absolute;
+
+            width: 100%;
+
+            text-align: center;
+
+            bottom: 40px;
+
+            color: #ffd700;
+
+            font-size: 25px;
+
+            letter-spacing: 4px;
+
+            text-shadow:
+                0 0 5px #ffd700,
+                0 0 15px #ffb700;
+
+            animation:
+                texto 2s ease-in-out infinite alternate;
+        }
+
+
+        /* =========================
+           ESTRELLITAS
+        ========================= */
+
+        .estrella {
+
+            position: absolute;
+
+            color: #fff3a0;
+
+            font-size: 15px;
+
+            animation:
+                estrella 2s infinite alternate;
+        }
+
+        .e1 {
+            left: 40px;
+            top: 160px;
+        }
+
+        .e2 {
+            right: 30px;
+            top: 220px;
+            animation-delay: .5s;
+        }
+
+        .e3 {
+            left: 80px;
+            top: 300px;
+            animation-delay: 1s;
+        }
+
+        .e4 {
+            right: 70px;
+            top: 100px;
+            animation-delay: 1.5s;
+        }
+
+
+        /* =========================
+           ANIMACIONES
+        ========================= */
+
+        @keyframes aparecer {
+
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            to {
+                opacity: 1;
+            }
+
+        }
+
+
+        @keyframes respirar {
+
+            0%,100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.12);
+            }
+
+        }
+
+
+        @keyframes luz {
+
+            from {
+                transform: scale(.9);
+                opacity: .5;
+            }
+
+            to {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+
+        }
+
+
+        @keyframes centro {
+
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.05);
+            }
+
+        }
+
+
+        @keyframes flotar {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+        }
+
+
+        @keyframes texto {
+
+            from {
+                opacity: .6;
+            }
+
+            to {
+                opacity: 1;
+            }
+
+        }
+
+
+        @keyframes estrella {
+
+            from {
+                opacity: .2;
+                transform: scale(.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.4);
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<div class="escena">
+
+
+    <!-- Luz -->
+
+    <div class="luz"></div>
+
+
+    <!-- Estrellitas -->
+
+    <div class="estrella e1">✦</div>
+    <div class="estrella e2">✧</div>
+    <div class="estrella e3">✦</div>
+    <div class="estrella e4">✧</div>
+
+
+    <!-- FLOR -->
+
+    <div class="flor">
+
+
+        <!-- 16 PÉTALOS -->
+
+        <div class="petalo p1"></div>
+        <div class="petalo p2"></div>
+        <div class="petalo p3"></div>
+        <div class="petalo p4"></div>
+
+        <div class="petalo p5"></div>
+        <div class="petalo p6"></div>
+        <div class="petalo p7"></div>
+        <div class="petalo p8"></div>
+
+        <div class="petalo p9"></div>
+        <div class="petalo p10"></div>
+        <div class="petalo p11"></div>
+        <div class="petalo p12"></div>
+
+        <div class="petalo p13"></div>
+        <div class="petalo p14"></div>
+        <div class="petalo p15"></div>
+        <div class="petalo p16"></div>
+
+
+        <!-- CENTRO -->
+
+        <div class="centro"></div>
+
+
+        <!-- TALLO -->
+
+        <div class="tallo"></div>
+
+
+        <!-- HOJAS -->
+
+        <div class="hoja hoja1"></div>
+        <div class="hoja hoja2"></div>
+
+    </div>
+
+
+    <!-- MENSAJE -->
+
+    <div class="mensaje">
+        🌻 Para ti 🌻
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
